@@ -390,6 +390,7 @@ class PaymentController extends Controller
         for($i=1;$i<=$get_month;$i++){
             $valid_months[] = $months[$i];
         }
+
         $query = DB::table('payments')
                 ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
                 ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
@@ -403,6 +404,7 @@ class PaymentController extends Controller
             $name = $q->name;
             $nisn = $q->nisn;
             $periode = $q->year_payment;
+
         }
         return view('users.result_list_spp', compact('query', 'name','nisn','periode','valid_months'));
     }

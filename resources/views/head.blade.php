@@ -10,4 +10,9 @@
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     
+    <style>
+    body {
+        background-color: #3cb5f2;
+    }    
+    </style>
 </head>

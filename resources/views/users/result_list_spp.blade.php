@@ -24,10 +24,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($valid_months as $m)
+                            @foreach($query as $q)
                             <tr>
-                                <td>{ }}</td>
+                                
+                                <td>{{ $m }}</td>
+                                @if($q->status == 1)
+                                <td>Lunas</td>
+                                @else
+                                <td>Belum Lunas</td>
+                                @endif
                             </tr>
-
+                            @endforeach
+                        @endforeach
                         </tbody>
                         </table>
 

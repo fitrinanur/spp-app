@@ -116,13 +116,6 @@ class AuthController extends Controller
 
     public function guide()
     {
-        $path = 'aset-image/' . 'header.jpeg';
-        // dd($path);
-        if ($exists = Storage::exists($path)) {
-            $img = Storage::response($path);
-        } else {
-            abort(404);
-        }
-        return view('users.payment_guide', compact('img'));
+        return view('users.payment_guide');
     }
 }

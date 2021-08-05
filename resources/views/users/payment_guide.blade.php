@@ -8,16 +8,28 @@
     }
 
     .header {
-        background-image: url({{ $img }});
+        margin-top: 0px !important;
+        background-image: url({{ url('images/smp2.png') }});
         background-size: cover;
         background-position: center;
         height: 100%;
     }
 
     .header-text {
-        padding: 50px 30px 50px 40px;
-        margin: 0px 10px 10px 10px;
-        color: white;
+        padding: 80px 50px 220px 40px;
+        margin: 0px 0px 0px 0px !important;
+        color: #5d5d5d;
+    }
+
+    .header-text h4  {
+        background-color: #fff;
+        padding: 5px;
+        margin: 0px !important;
+    }
+    .header-text p  {
+        background-color: #fff;
+        padding: 5px;
+        margin: 0px !important;
     }
 
     .bank-acccount{
@@ -47,10 +59,10 @@
             </nav>
         </div>
         <div class="header">
+            <div></div>
             <div class="header-text">
                 <h4 class="display-3">SMP Negeri Baturetno 2</h4>
                 <p class="lead">Selamat datang di Sistem SPP SMP Baturetno 2. Sistem memudahkan untuk konfirmasi pembayaran SPP.</p>
-
             </div>
         </div>
         <p><img src=""/></p>
@@ -104,8 +116,17 @@
         </div>
         <div class="tutorial-payment">
             <div class="card">
-                <div class="card-body">
-                    
+                <div class="card-body" style="margin:10px">
+                    <h5>Tata Cara Pembayaran Melalui Transfer Bank</h5>
+                    <ol>
+                        <li>Pilih Salah Satu Rekening Diatas</li>
+                        <li>Transfer Ke Salah Satu Rekening Bank yang Anda Pilih</li>
+                        <li>Foto Bukti Pembayaran</li>
+                        <li>Pilih "Menu Upload Bukti Pembayaran" di Halaman Utama</li>
+                        <li>Admin Akan Konfirmasi Bukti Pembayaran</li>
+                        <li>Status Pembayaran akan terupdate jika Admin Telah Melakukan Verifikasi Pembayaran</li>
+                    </ol>
+                    <p>*Pastikan foto bukti pembayaran terlihat dengan jelas</p>
                 </div>
             </div>
         </div>
