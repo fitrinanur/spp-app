@@ -143,6 +143,7 @@ class ReportPaymentController extends Controller
         $class = $request->class;
         $status = $request->status;
 
+        // dd($request->all());
         return (new PaymentExports)->filter($year,$month,$class,$status)->download('Payments.xlsx');
 
     }

@@ -30,19 +30,9 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
 
     public function styles(Worksheet $sheet)
     {
-        // return [
-        //     // Style the first row as bold text.
-        //     1    => ['font' => ['bold' => true, 'size' => 13]],
-
-            // Styling a specific cell by coordinate.
-            // 'B2' => ['font' => ['italic' => true]],
-
-            // Styling an entire column.
-            // 'C'  => ['font' => ['size' => 16]],
-            // $sheet->setBorder('A1:L20', 'thin');
-            $sheet->getStyle('A1:L1')->getFont()->setFontSize(13)->setBold(true);
-            // $sheet->getStyle('A1:L1')->setFontSize(13);
-        // ];
+        return [
+            1    => ['font' => ['bold' => true, 'size' => 13]],
+        ];
     }
 
     public function title(): string
@@ -70,7 +60,19 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
 
     public function query()
     {
-        $payments =  DB::table('payments')
+        if($this->class == "all"){
+            $payments =  DB::table('payments')
+                    ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
+                    ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
+                    ->leftJoin('classes','student_classes.id_class','=','classes.id')
+                    ->select('payments.id as p_id','students.nisn as nisn','students.name as name','students.wali_name as wali_name','students.wali_number as wali_number','classes.name as c_name','payments.status','payments.year_payment','payments.created_at','payments.updated_at','payments.image_payment','payments.description')
+                    ->where('payments.year_payment','=', $this->year)
+                    ->where('payments.month_payment','=', $this->month)
+                    ->where('payments.status','=', $this->status)
+                    ->orderBy('payments.id', 'asc');
+        //    dd($payments);
+        }else{
+            $payments =  DB::table('payments')
                     ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
                     ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
                     ->leftJoin('classes','student_classes.id_class','=','classes.id')
@@ -80,6 +82,8 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
                     ->where('classes.id','=', $this->class)
                     ->where('payments.status','=', $this->status)
                     ->orderBy('payments.id', 'asc');
+        }   
+        // dd($payments);
         return  $payments;
     }
 

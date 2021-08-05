@@ -50,6 +50,7 @@
                                         <div class="form-group col-md-3">
                                             <label for="inputName">Status</label>
                                             <select id="status" class="form-control" name="status" required>
+                                                <!-- <option value="all"> Semua Status </option> -->
                                                 @foreach($statuses as $key => $status)
                                                 <option value="{{ $key }}"> {{$status}} </option>
                                                 @endforeach
