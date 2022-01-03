@@ -41,10 +41,13 @@
                                     <tbody>
                                     @if($lists)
                                         @foreach($lists as $key => $list)
+                                        @php
+                                        $add = str_replace('_#', ' ', $list->address);
+                                        @endphp
                                         <tr>
                                             <td>{{ $list->nisn }}</td>
                                             <td>{{ $list->name }}</td>
-                                            <td>{{ $list->address }}</td>
+                                            <td>{{ $add }}</td>
                                             <td>{{ $list->wali_name }}</td>
                                             <td>{{ $list->wali_number }}</td>
                                             <td>{{ $list->wali_profession }}</td>

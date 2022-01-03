@@ -78,15 +78,61 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Alamat</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="address">{{ $student->address}}</textarea>
-
-                                @if ($errors->has('address'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('address') }}</strong>
-                                </span>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                <label for="inputEmail4">Nama Dusun<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" id="inputNisn" name="dusun_name" placeholder="Nama Dusun" value="{{ $address[0] }}" required>
+                                @if ($errors->has('dusun_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('dusun_name') }}</strong>
+                                    </span>
                                 @endif
+                                </div>
+                                <div class="form-group col-md-4">
+                                <label for="inputName">Desa<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" id="inputName" name="desa_name" placeholder="Nama Desa" value="{{ $address[1] }}" required>
+                                @if ($errors->has('desa_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('desa_name') }}</strong>
+                                    </span>
+                                @endif
+                                </div>
+                                <div class="form-group col-md-2">
+                                <label for="inputName">RT<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" id="inputName" name="rt" placeholder="RT" value="{{ $address[2] }}" required>
+                                @if ($errors->has('rt'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('rt') }}</strong>
+                                    </span>
+                                @endif
+                                </div>
+                                <div class="form-group col-md-2">
+                                <label for="inputName">RW<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" id="inputName" name="rw" placeholder="RW" value="{{ $address[3] }}" required>
+                                @if ($errors->has('rw'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('rw') }}</strong>
+                                    </span>
+                                @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                <label for="inputName">Kecamatan<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" id="inputName" name="kecamatan" placeholder="Kecamatan" value="{{ $address[4] }}" required>
+                                @if ($errors->has('kecamatan'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('kecamatan') }}</strong>
+                                    </span>
+                                @endif
+                                </div>
+                                <div class="form-group col-md-6">
+                                <label for="inputName">Kota<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" id="inputName" name="city" placeholder="Kota" value="{{ $address[5] }}" required>
+                                @if ($errors->has('city'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-sync"></i> Update</button>
                             <a type="submit" class="btn btn-dark" href="{{ route('student.index') }}" style="float:right"><i class="fa fa-arrow-left"></i> Back</a>

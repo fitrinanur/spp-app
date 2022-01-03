@@ -57,11 +57,11 @@
                                 <hr/>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputName">Bulan Pembayaran</label>
-                                        <select id="month_payment" class="form-control" name="month_payment" required>
-                                            @foreach($months as $key => $month)
-                                                <option value= "{{ $key }}" @if ($payment->month_payment ==
-                                    $key) selected @endif > {{ $month }} </option>
+                                        <label for="inputName">Semester</label>
+                                        <select id="month_payment" class="form-control" name="semester" required>
+                                            @foreach($semesters as $key => $semester)
+                                                <option value= "{{ $key }}" @if ($payment->semester ==
+                                    $key) selected @endif > {{ $semester }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -76,15 +76,6 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Kelas</label>
-                                        <select id="grade_spp" class="form-control" name="grade_spp" required>
-                                            @foreach($grade_spp as $key => $spp)
-                                                <option value= "{{ $spp->id }}" @if ($payment->id_grade_spp ==
-                                    $key) selected @endif> {{ $spp->level }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
                                     <div class="form-group col-md-6">
                                         <label for="inputEmail4">Status</label>
                                         <select id="payment_status" class="form-control" name="payment_status" required>

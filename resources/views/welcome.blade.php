@@ -79,8 +79,9 @@
             <div class="content">
                 <div class="title m-b-md">
                     Sistem Pembayaran Sumbangan Pengembangan Pendidikan <br/>
-                    SMPN Baturetno 2 Wonogiri
+                    SMP Negeri 2 Baturetno<br/>
                 </div>
+                <p>Jl. Raya Giritontro - Baturetno, Batu Kidul, Baturetno, Kabupaten Wonogiri, Jawa Tengah 57673</p>
                 <div class="">
                     <a class="btn btn-outline-info" href="{{ route('user_payment.create') }}">Upload Bukti Pembayaran</a>
                     <a class="btn btn-outline-info" href="{{ route('user.check_spp') }}">Check Status Pembayaran</a>

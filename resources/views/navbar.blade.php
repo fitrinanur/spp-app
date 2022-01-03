@@ -26,7 +26,7 @@
                 </a>
                 <a class="nav-link" href="{{ route('grade_spp.index') }}">
                     <span data-feather="clipboard"></span>
-                    Data Nilai SPP
+                    Data Nilai Sumbangan
                 </a>
             </li>
             <li class="nav-item">

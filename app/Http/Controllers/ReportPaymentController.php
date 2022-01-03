@@ -19,10 +19,10 @@ class ReportPaymentController extends Controller
     {
         $get_date_now       = Carbon::now();
         $years              = $this->years();
-        $months             = $this->months();
+        $semesters             = $this->semesters();
         $statuses           = $this->statuses();
         $classes            = Classes::all();
-        return view('reports.payment_index',compact('years','months','get_date_now','statuses','classes'));
+        return view('reports.payment_index',compact('years','semesters','get_date_now','statuses','classes'));
     }
 
     /**
@@ -108,22 +108,12 @@ class ReportPaymentController extends Controller
         return $year;
     }
 
-    private function months()
+    private function semesters()
     {
-        return $month =
+        return $semesters =
         [
-            '1' => 'Januari',
-            '2' => 'Februari',
-            '3' => 'Maret',
-            '4' => 'April',
-            '5' => 'Mei',
-            '6' => 'Juni',
-            '7' => 'Juli',
-            '8' => 'Agustus',
-            '9' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember',
+            '1' => 'Ganjil',
+            '2' => 'Genap',
         ];
     }
 
@@ -139,12 +129,12 @@ class ReportPaymentController extends Controller
     public function doExport(Request $request)
     {
         $year = $request->year_payment;
-        $month = $request->month_payment;
+        $semester = $request->semester;
         $class = $request->class;
         $status = $request->status;
 
         // dd($request->all());
-        return (new PaymentExports)->filter($year,$month,$class,$status)->download('Payments.xlsx');
+        return (new PaymentExports)->filter($year,$semester,$class,$status)->download('Payments.xlsx');
 
     }
 }

@@ -34,7 +34,8 @@
                                             <th>Bukti Bayar</th>
                                             <th>Status</th>
                                             <th>Keterangan</th>
-                                            <th>Periode</th>
+                                            <th>Semester</th>
+                                            <th>Tahun</th>
                                             <th>Tanggal Bayar</th>
                                             <th>Terakhir diubah</th>
                                             <th colspan="3" style="text-align:center">Action</th>
@@ -56,6 +57,13 @@
                                             <td>Belum Diverifikasi Admin</td>
                                             @endif
                                             <td>{{ $list->description }}</td>
+                                            <td>
+                                            @if($list->semester == 1)
+                                                Ganjil
+                                            @else
+                                                Genap
+                                            @endif                                        
+                                            </td>
                                             <td>{{ $list->year_payment }}</td>
                                             <td>{{ $list->created_at }}</td>
                                             <td>{{ $list->updated_at }}</td>

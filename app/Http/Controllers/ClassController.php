@@ -144,17 +144,24 @@ class ClassController extends Controller
     { 
         $existNisn = Student_class::where('nisn_student', $request->nisn)
         ->first();
+        $existStudent =Student::where('nisn',$request->nisn)->first();
 
-        if($existNisn){
-            flash('Data Siswa Sudah Ada / Siswa Sudah Terdaftar Ditempat Lain !')->error();
-            return redirect()->route('class.student.index', $id);
+        if($existStudent){
+            if($existNisn){
+                flash('Data Siswa Sudah Ada / Siswa Sudah Terdaftar Ditempat Lain !')->error();
+                return redirect()->route('class.student.index', $id);
+            }else{
+                $student_class = new Student_class();
+                $student_class->id_class = $id;
+                $student_class->nisn_student = $request->nisn;
+                $student_class->save();
+
+                flash('Tambah siswa kedalam kelas berhasil!')->success();
+                return redirect()->route('class.student.index', $id);
+            }
+            
         }else{
-            $student_class = new Student_class();
-            $student_class->id_class = $id;
-            $student_class->nisn_student = $request->nisn;
-            $student_class->save();
-
-            flash('Tambah siswa kedalam kelas berhasil!')->success();
+            flash('NISN Siswa belum terdaftar!')->error();
             return redirect()->route('class.student.index', $id);
         }
     }

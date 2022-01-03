@@ -54,14 +54,14 @@
             <nav>
                 <ul class="navbar navbar-dark bg-dark">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="{{ url('/') }}">SMP BATURETNO 2</a>
+                        <a class="navbar-brand" href="{{ url('/') }}">SMPN 2 Baturetno</a>
                     </div>
             </nav>
         </div>
         <div class="header">
             <div></div>
             <div class="header-text">
-                <h4 class="display-3">SMP Negeri Baturetno 2</h4>
+                <h4 class="display-3">SMPN 2 Baturetno</h4>
                 <p class="lead">Selamat datang di Sistem SPP SMP Baturetno 2. Sistem memudahkan untuk konfirmasi pembayaran SPP.</p>
             </div>
         </div>
@@ -74,7 +74,7 @@
                             <p style="text-align:center;color:gray;font-size:16px;"><i class="fa fa-credit-card"></i> BSI</p>
                             <p style="text-align:center">
                                 Info Rekening :<br/> <span style="color:blue" > 45212122323 </span><br/>
-                                <span style="color:blue" >SMPN Baturetno 2</span>
+                                <span style="color:blue" >SMPN 2 Baturetno</span>
                             </p>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             <p style="text-align:center;color:gray;font-size:16px;"><i class="fa fa-credit-card"></i> BCA </p>
                             <p style="text-align:center">
                                 Info Rekening :<br/> <span style="color:blue" > 45212122323 </span><br/>
-                                <span style="color:blue" >SMPN Baturetno 2</span>
+                                <span style="color:blue" >SMPN 2 Baturetno</span>
                             </p>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                             <p style="text-align:center;color:gray;font-size:16px;"><i class="fa fa-credit-card"></i> BNI</p>
                             <p style="text-align:center">
                                 Info Rekening :<br/> <span style="color:blue" > 45212122323 </span><br/>
-                                <span style="color:blue" >SMPN Baturetno 2</span>
+                                <span style="color:blue" >SMPN 2 Baturetno</span>
                             </p>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                             <p style="text-align:center;color:gray;font-size:16px;"><i class="fa fa-credit-card"></i> BRI</p>
                             <p style="text-align:center">
                                 Info Rekening :<br/> <span style="color:blue" > 45212122323 </span><br/>
-                                <span style="color:blue" >SMPN Baturetno 2</span>
+                                <span style="color:blue" >SMPN 2 Baturetno</span>
                             </p>
                         </div>
                     </div>

@@ -31,11 +31,11 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label for="inputName">Bulan Pembayaran</label>
-                                            <select id="month_payment" class="form-control" name="month_payment"
+                                            <label for="inputName">Semester Pembayaran</label>
+                                            <select id="semester" class="form-control" name="semester"
                                                 required>
-                                                @foreach($months as $key => $month)
-                                                <option value="{{ $key }}"> {{ $month }} </option>
+                                                @foreach($semesters as $key => $semester)
+                                                <option value="{{ $key }}"> {{ $semester }} </option>
                                                 @endforeach
                                             </select>
                                         </div>

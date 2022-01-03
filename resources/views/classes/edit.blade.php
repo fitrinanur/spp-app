@@ -6,6 +6,7 @@
     <div class="container-fluid">
       <div class="row">
         <main role="main" class="col-sm-10 offset-1">
+        @include('flash::message') 
                 <div class="col-md-10 offset-1" style="margin-top:30px">
                     <div class="card">
                         <div class="card-header">
@@ -18,10 +19,10 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                 <label for="inputState">Tingkatan</label>
-                                <select id="inputState" class="form-control" name="level" disabled readonly>
+                                <select id="inputState" class="form-control" name="level" readonly required>
                                     @foreach($levels as $key => $level)
                                     <option value="{{$level}}" @if ($class->level ==
-                                    $level) selected @endif>{{$level}}</option>
+                                    $level) selected @endif> {{$level}} </option>
                                     @endforeach
                                 </select>
                                 </div>
@@ -34,7 +35,7 @@
                                     <strong>{{ $errors->first('name') }}</strong>
                                 </span>
                                 @endif
-                                <input type="hidden" class="form-control" id="inputName" name="id" placeholder="Nama" value="{{ $class->id }}">
+                                <input type="hidden" class="form-control" id="inputName" name="id" value="{{ $class->id }}">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-sync"></i> Update</button>

@@ -57,31 +57,24 @@
                                 <input type="hidden" class="form-control-plaintext" id="student_class_id" name="" readonly required>
                                
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputName">Bulan Pembayaran</label>
-                                        <select id="month_payment" class="form-control" name="month_payment" required>
-                                            @foreach($months as $key => $month)
-                                                <option value= "{{ $key }}" @if ($get_date_now->month == $key) selected @endif > {{ $month }} </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputName">Kelas</label>
+                                        <input type="text" class="form-control" id="student_class_level" name="class_level" id="inputAddress" readonly required>
+                                        
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputName">Periode</label>
-                                        <select id="year_payment" class="form-control" name="year_payment" required>
-                                        @foreach($years as $year)
-                                        <option value="{{ $year }}" @if ($get_date_now->year == $year) selected @endif > {{$year}} </option>
-                                        @endforeach
-                                        </select>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputName">Semester</label>
+                                        <input type="text" class="form-control" id="student_semester" name="class_level" id="inputAddress" readonly required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="inputName">Tahun Pembayaran</label>
+                                        <input type="text" class="form-control" id="student_year" name="class_level" id="inputAddress" readonly required>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Jumlah SPP</label>
-                                        <select id="grade_spp" class="form-control" name="grade_spp" required>
-                                            @foreach($grade_spp as $key => $spp)
-                                                <option value= "{{ $spp->id }}"> {{ $spp->total }} </option>
-                                            @endforeach
-                                        </select>
+                                        <label for="inputEmail4">Biaya Pengembangan</label>
+                                        <input type="text" class="form-control" id="student_cost" name="class_level" id="inputAddress" readonly required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="inputName">Bukti Bayar</label>
@@ -146,7 +139,12 @@
                 $('#student_wali_number').val(data.wali_number);
                 $('#student_wali_profession').val(data.wali_profession);
                 $('#student_religion').val(data.religion);
+                $('#student_class_level').val(data.class);
+                $('#student_semester').val(data.semester);
+                $('#student_year').val(data.year);
+                $('#student_cost').val(data.cost);
         });
+
     });
 </script>
 </body>

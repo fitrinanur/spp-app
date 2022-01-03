@@ -21,7 +21,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="{{ route('grade_spp.index') }}">Data Nilai SPP</a></li>
+                        <li><a class="dropdown-item" href="{{ route('semester.index') }}">Data Nilai Sumbangan</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -40,7 +40,7 @@
                         Laporan
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('reports_payments.index') }}">Laporan SPP</a></li>
+                        <li><a class="dropdown-item" href="{{ route('reports_payments.index') }}">Laporan Data Sumbangan</a></li>
                     </ul>
                 </li>
             </ul>

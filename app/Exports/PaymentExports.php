@@ -18,10 +18,10 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
 {
     use Exportable;
 
-    public function filter($year,$month,$class,$status)
+    public function filter($year,$semester,$class,$status)
     {
         $this->year  = $year;
-        $this->month = $month;
+        $this->semester = $semester;
         $this->class = $class;
         $this->status = $status;
 
@@ -37,7 +37,7 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
 
     public function title(): string
     {
-        return 'Bulan ke-  ' . $this->month;
+        return 'Semester ke-  ' . $this->semester;
     }
 
     public function headings(): array
@@ -50,7 +50,7 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
             'Nomor Wali Murid',
             'Nama Kelas',
             'Status Pembayaran',
-            'Periode Pembayaran',
+            'Tahun Pembayaran',
             'Tanggal Pembayaran',
             'Tanggal Terakhir Pembaharuan',
             'Bukti Bayar',
@@ -67,7 +67,7 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
                     ->leftJoin('classes','student_classes.id_class','=','classes.id')
                     ->select('payments.id as p_id','students.nisn as nisn','students.name as name','students.wali_name as wali_name','students.wali_number as wali_number','classes.name as c_name','payments.status','payments.year_payment','payments.created_at','payments.updated_at','payments.image_payment','payments.description')
                     ->where('payments.year_payment','=', $this->year)
-                    ->where('payments.month_payment','=', $this->month)
+                    ->where('payments.semester','=', $this->semester)
                     ->where('payments.status','=', $this->status)
                     ->orderBy('payments.id', 'asc');
         //    dd($payments);
@@ -78,7 +78,7 @@ class PaymentExports implements FromQuery,WithHeadings,ShouldAutoSize,WithStyles
                     ->leftJoin('classes','student_classes.id_class','=','classes.id')
                     ->select('payments.id as p_id','students.nisn as nisn','students.name as name','students.wali_name as wali_name','students.wali_number as wali_number','classes.name as c_name','payments.status','payments.year_payment','payments.created_at','payments.updated_at','payments.image_payment','payments.description')
                     ->where('payments.year_payment','=', $this->year)
-                    ->where('payments.month_payment','=', $this->month)
+                    ->where('payments.semester','=', $this->semester)
                     ->where('classes.id','=', $this->class)
                     ->where('payments.status','=', $this->status)
                     ->orderBy('payments.id', 'asc');

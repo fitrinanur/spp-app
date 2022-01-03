@@ -81,11 +81,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ajax-subcat-student/students.json', 'PaymentController@getStudent')->name('get_student');
     
 
-    Route::get('grade-spp','GradeSppController@index')->name('grade_spp.index');
-    // Route::get('create-grade-spp','GradeSppController@create')->name('grade_spp.create');
-    Route::post('create-grade-spp','GradeSppController@store')->name('grade_spp.store');
-    Route::get('edit-grade-spp/{id}','GradeSppController@edit')->name('grade_spp.edit');
-    Route::put('edit-grade-spp/{id}','GradeSppController@update')->name('grade_spp.update');
+    Route::get('semester','SemesterController@index')->name('semester.index');
+    Route::get('create-cost-semester','SemesterController@create')->name('semester.create');
+    Route::post('create-cost-semester','SemesterController@store')->name('semester.store');
+    Route::get('edit-cost-semester/{id}','SemesterController@edit')->name('semester.edit');
+    Route::put('edit-cost-semester/{id}','SemesterController@update')->name('semester.update');
+    Route::put('status-semester/{id}','SemesterController@changeStatus')->name('semester_status.update');
+    Route::delete('semester/{id}','SemesterController@destroy')->name('semester.destroy');
 
 
 });

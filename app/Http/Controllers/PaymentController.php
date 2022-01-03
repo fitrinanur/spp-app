@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Payment;
 use Illuminate\Http\Request;
 use App\Student_class;
-use App\Grade_spp;
+use App\Semester;
 use App\Student;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -30,21 +30,20 @@ class PaymentController extends Controller
             $data['lists'] = DB::table('payments')
                             ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
                             ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
-                            ->select('payments.id as id','payments.image_payment','students.name as name', 'students.nisn as nisn','students.wali_number as wali_number','payments.status','payments.description','payments.year_payment','payments.created_at','payments.updated_at')
+                            ->select('payments.id as id','payments.image_payment','students.name as name', 'students.nisn as nisn','students.wali_number as wali_number','payments.status','payments.description','payments.year_payment','payments.semester','payments.created_at','payments.updated_at')
                             ->where('students.name','like', '%' .$request->get('search') . '%')
                             ->paginate(10);
         }else{
             $data['lists'] = DB::table('payments')
                             ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
                             ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
-                            ->select('payments.id as id','payments.image_payment','students.name as name', 'students.nisn as nisn','students.wali_number as wali_number','payments.status','payments.description','payments.year_payment','payments.created_at','payments.updated_at')
+                            ->select('payments.id as id','payments.image_payment','students.name as name', 'students.nisn as nisn','students.wali_number as wali_number','payments.status','payments.description','payments.year_payment','payments.semester','payments.created_at','payments.updated_at')
                             ->paginate(10);
             
         }
         return view('payments.index', $data);
 
-        // $payments = Payment::with('student_classes','grade_spp')->get();
-        // return view('payments.index', compact('payments'));
+        
     }
 
     /**
@@ -56,13 +55,13 @@ class PaymentController extends Controller
     {
         $get_date_now       = Carbon::now();
         $student_classes    = Student_class::all();
-        $grade_spp          = Grade_spp::all();
+        $semesters          = Semester::all();
         $religions          = $this->religions();
         $statuses           = $this->statuses();
-        $months             = $this->months();
+        $semesters             = $this->semesters();
         $years              = $this->years();
         // $students           = Student::all();
-        return view('payments.create', compact('student_classes','grade_spp','religions','statuses','months','years','get_date_now'));
+        return view('payments.create', compact('student_classes','religions','statuses','semesters','years','get_date_now'));
     }
 
     /**
@@ -76,7 +75,7 @@ class PaymentController extends Controller
         // dd($request->all());
 
         $existNisn = Payment::where('id_student_classes', $request->student_class_id)->where([
-                    ['month_payment',$request->month_payment],
+                    ['semester',$request->semester],
                     ['year_payment', $request->year_payment]
                     ])->first();
         // dd($existNisn);
@@ -103,7 +102,7 @@ class PaymentController extends Controller
                 $payment->status = 1;
             }
             $payment->description = $request->description;
-            $payment->month_payment = $request->month_payment;
+            $payment->semester = $request->semester;
             $payment->year_payment = $request->year_payment;
             $payment->image_payment = $name;
             $payment->save();
@@ -132,17 +131,18 @@ class PaymentController extends Controller
      */
     public function edit($id)
     {
-        // dd($id);
+       
         $get_date_now       = Carbon::now();
         $student_classes    = Student_class::all();
-        $grade_spp          = Grade_spp::all();
+        
         $religions          = $this->religions();
         $statuses           = $this->statuses();
-        $months             = $this->months();
+        $semesters             = $this->semesters();
         $years              = $this->years();
         $payment           = Payment::find($id);
+        $semester          = Semester::where('status','=',1);
 
-        return view('payments.edit', compact('payment','student_classes','grade_spp','religions','statuses','months','years','get_date_now'));
+        return view('payments.edit', compact('semester','payment','student_classes','religions','statuses','semesters','years','get_date_now'));
     }
 
     /**
@@ -154,12 +154,12 @@ class PaymentController extends Controller
      */
     public function update(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
             $payment = Payment::find($request->id);
             // dd($payment);
             $payment->status = $request->status;
             $payment->year_payment = $request->year_payment;
-            $payment->month_payment = $request->month_payment;
+            $payment->semester = $request->semester;
             $payment->description = $request->description;
             $payment->status = $request->payment_status;
             $payment->update();
@@ -203,22 +203,12 @@ class PaymentController extends Controller
         ];
     }
 
-    private function months()
+    private function semesters()
     {
-        return $month =
+        return $semester =
         [
-            '1' => 'Januari',
-            '2' => 'Februari',
-            '3' => 'Maret',
-            '4' => 'April',
-            '5' => 'Mei',
-            '6' => 'Juni',
-            '7' => 'Juli',
-            '8' => 'Agustus',
-            '9' => 'September',
-            '10' => 'Oktober',
-            '11' => 'November',
-            '12' => 'Desember',
+            '1' => 'Ganjil',
+            '2' => 'Genap'
         ];
     }
     
@@ -243,13 +233,18 @@ class PaymentController extends Controller
     {
         $search = $request->search;
         if($search == ''){
-            $studentClasses = Student_class::orderby('nisn_student','asc')->select('nisn_student','id','id_class')->limit(5)->get();
+            $studentClasses = Student_class::orderby('nisn_student','asc')->select('nisn_student','id','id_class')
+            ->with('Student','Classes')
+            ->get();
          }else{
             $studentClasses = Student_class::orderby('nisn_student','asc')->select('nisn_student','id','id_class')
-                ->with('Student','Classes')
-                ->where('nisn_student', 'like', '%' .$search . '%')->limit(1)->get();
+            ->with('Student','Classes')
+            ->where('nisn_student', 'like', '%' .$search . '%')->limit(1)->get();
          }
          $response = array();
+         $semester = DB::table('semesters')
+                        ->where('status',1)
+                        ->first();
          foreach($studentClasses as $studentClass){
             //  dd($studentClass);
             $response[] = array(
@@ -260,7 +255,11 @@ class PaymentController extends Controller
                  "wali_name"=>$studentClass->student->wali_name,
                  "wali_number"=>$studentClass->student->wali_number,
                  "wali_profession"=>$studentClass->student->wali_profession,
-                 "religion"=>$studentClass->student->religion
+                 "religion"=>$studentClass->student->religion,
+                 "class"=>$studentClass->classes->level,
+                 'year' => $semester->year,
+                 'semester' => $semester->semester,
+                 'cost' => $semester->{'cost_level_' . $studentClass->classes->level}
             );
          }
    
@@ -271,15 +270,21 @@ class PaymentController extends Controller
     {
         $search = $request->search;
         if($search == ''){
-            $studentClasses = Student_class::orderby('nisn_student','asc')->select('nisn_student','id','id_class')->limit(5)->get();
+            $studentClasses = Student_class::orderby('nisn_student','asc')->select('nisn_student','id','id_class')
+            ->with('Student','Classes')
+            ->limit(10)->get();
          }else{
             $studentClasses = Student_class::orderby('nisn_student','asc')->select('nisn_student','id','id_class')
                 ->with('Student','Classes')
-                ->where('nisn_student', 'like', '%' .$search . '%')->limit(1)->get();
+                ->where('nisn_student', 'like', '%' .$search . '%')->limit(5)->get();
          }
+         $semester = DB::table('semesters')
+                        ->where('status','=',1)
+                        ->first();
+                        // dd($semester);
+                     
          $response = array();
          foreach($studentClasses as $studentClass){
-            //  dd($studentClass);
             $response[] = array(
                  "id"=>$studentClass->nisn_student,
                  "student_class_id"=>$studentClass->id,
@@ -287,10 +292,13 @@ class PaymentController extends Controller
                  "text"=>$studentClass->student->name,
                  "wali_name"=>$studentClass->student->wali_name,
                  "wali_profession"=>$studentClass->student->wali_profession,
-                 "religion"=>$studentClass->student->religion
+                 "religion"=>$studentClass->student->religion,
+                 "class"=>$studentClass->classes->level,
+                 "year" => $semester->year,
+                 "semester" => $semester->semester,
+                 'cost' => $semester->{'cost_level_' . $studentClass->classes->level},
             );
          }
-   
          return response()->json($response);
     }
 
@@ -312,21 +320,24 @@ class PaymentController extends Controller
 
     public function userPayment()
     {
-        $months             =  $this->months();
+        $semesters             =  $this->semesters();
         $years              =  $this->years();
         $get_date_now       = Carbon::now();
         $statuses           = $this->statuses();
         $student_classes    = Student_class::all();
-        $grade_spp          = Grade_spp::all();
 
-        return view('users.form_payment', compact('months','years','get_date_now','grade_spp', 'statuses', 'student_classes'));
+        return view('users.form_payment', compact('semesters','years','get_date_now', 'statuses', 'student_classes'));
     }
 
     public function doUploadUser(Request $request)
     {
-        $existNisn = Payment::where('id_student_classes', $request->student_class_id)->first();
+        $existNisn = Payment::where('id_student_classes', $request->student_class_id)->where([
+                    ['semester',$request->semester],
+                    ['year_payment', $request->year_payment]
+                    ])->first();
+
         $existWaliNumber = Student::where('wali_number', $request->wali_number)->first();
-        // dd($existWaliNumber);
+
         //validasi image
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -349,7 +360,7 @@ class PaymentController extends Controller
                 }
                 $payment->status = $request->payment_status;
                 $payment->description = $request->description;
-                $payment->month_payment = $request->month_payment;
+                $payment->semester = $request->semester;
                 $payment->year_payment = $request->year_payment;
                 $payment->image_payment = $name;
                 $payment->save();
@@ -372,41 +383,35 @@ class PaymentController extends Controller
     public function doCheckSpp(Request $request)
     {
         
-        $get_month = Carbon::now()->month;
-        $months = [
-            1 => 'Januari',
-            2 => 'Februari',
-            3 => 'Maret',
-            4 => 'April',
-            5 => 'Mei',
-            6 => 'Juni',
-            7 => 'Juli',
-            8 =>'Agustus',
-            9 =>'September',
-            10 =>'Oktober',
-            11 =>'November',
-            12 =>'Desember'
+        // $get_month = Carbon::now()->month;
+        $semesters = [
+            1 => 'Ganjil',
+            2 => 'Genap',
         ];
-        for($i=1;$i<=$get_month;$i++){
-            $valid_months[] = $months[$i];
-        }
+        // for($i=1;$i<=$get_month;$i++){
+        //     $valid_months[] = $months[$i];
+        // }
+            try{
+                $query = DB::table('payments')
+                        ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
+                        ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
+                        ->where([
+                            ['students.nisn','=', $request->nisn],
+                            ['students.wali_number','=', $request->mobile_number]
+                        ])
+                        ->get();
 
-        $query = DB::table('payments')
-                ->leftJoin('student_classes','payments.id_student_classes','=','student_classes.id')
-                ->leftJoin('students','student_classes.nisn_student','=','students.nisn')
-                ->where([
-                    ['students.nisn','=', $request->nisn],
-                    ['students.wali_number','=', $request->mobile_number]
-                ])
-                ->get();
-        
-        foreach($query as $q){
-            $name = $q->name;
-            $nisn = $q->nisn;
-            $periode = $q->year_payment;
-
-        }
-        return view('users.result_list_spp', compact('query', 'name','nisn','periode','valid_months'));
+                foreach($query as $q){
+                    $name = $q->name;
+                    $nisn = $q->nisn;
+                    $periode = $q->year_payment;
+                }
+            }catch(\Exception $exception) {
+                flash($exception->getMessage())->error();
+                return redirect()->back();
+            }
+       
+        return view('users.result_list_spp', compact('query', 'name','nisn','periode','semesters'));
     }
     
 
@@ -417,7 +422,7 @@ class PaymentController extends Controller
 
     public function paymentConfirmationList()
     {
-        $payments = Payment::with('student_classes','grade_spp')
+        $payments = Payment::with('student_classes','semesters')
                     ->where('status','=',0)
                     ->get();
         

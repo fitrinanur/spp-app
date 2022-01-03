@@ -54,10 +54,11 @@ class StudentController extends Controller
             return redirect()->route('student.create');
 
         }else {
+            $address = $request->dusun_name .'_#'. $request->desa_name .'_#'. $request->rt .'_#'. $request->rw .'_#'. $request->kecamatan .'_#'. $request->city;
             $student = new Student();
             $student->nisn = $request->nisn;
             $student->name = $request->name;
-            $student->address = $request->address;
+            $student->address = $address;
             $student->wali_name = $request->wali_name;
             $student->wali_number = $request->wali_number;
             $student->religion = $request->religion;
@@ -90,7 +91,9 @@ class StudentController extends Controller
     { 
         $religions = $this->religions();
         $student = Student::find($nisn);
-        return view('students.edit', compact('student','religions'));
+
+        $address = explode("_#", $student->address);
+        return view('students.edit', compact('student','religions','address'));
     }
 
     /**
@@ -103,10 +106,11 @@ class StudentController extends Controller
     public function update(Request $request)
     {
         try {
+            $address = $request->dusun_name .'_#'. $request->desa_name .'_#'. $request->rt .'_#'. $request->rw .'_#'. $request->kecamatan .'_#'. $request->city;
             $student = Student::find($request->nisn);
             $student->nisn = $request->nisn;
             $student->name = $request->name;
-            $student->address = $request->address;
+            $student->address = $address;
             $student->wali_name = $request->wali_name;
             $student->wali_number = $request->wali_number;
             $student->religion = $request->religion;
